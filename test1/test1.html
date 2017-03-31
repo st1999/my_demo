@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    html,
+    body {
+        width: 100%;
+        width: 1366px;
+        height: 650px;
+        height: 100%;
+    }
+    
+    body {
+        background: url(background.jpg) no-repeat;
+        overflow: hidden;
+    }
+    
+    .main {
+        margin: 217px auto;
+        width: 1190px;
+        height: 217px;
+        /*background: lightblue;*/
+    }
+    
+    .main-info {
+        margin: 40px auto;
+        width: 1200px;
+        height: 651px;
+        /*border: 1px solid;*/
+    }
+    
+    .main div {
+        position: absolute;
+        /* width: 10%;
+        height: 33.3333%;*/
+        background-color: rgba(29, 32, 136, 0.35);
+        /* transition: all ease-in-out 1s;
+        opacity: 1;
+        transform: rotate(0) scale(1);*/
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main-info">
+        <div id="main" class="main"></div>
+    </div>
+    <script type="text/javascript" src="images/engine/jquery.js">
+    </script>
+    <script type="text/javascript">
+    jQuery.extend(jQuery.easing, {
+        easeOutQuart: function(t, e, i, a, n) {
+            return -a * ((e = e / n - 1) * e * e * e - 1) + i
+        },
+        easeInExpo: function(t, e, i, a, n) {
+            return 0 == e ? i : a * Math.pow(2, 10 * (e / n - 1)) + i
+        },
+        easeInCirc: function(t, e, i, a, n) {
+            return -a * (Math.sqrt(1 - (e /= n) * e) - 1) + i
+        }
+    });
+
+    function init() {
+        change($('#main'));
+    }
+
+    function getDelay(t, e) {
+        return Math.abs((e % 2 ? 1 : 0) + (e - e % 2) / 2 - t) / e
+    }
+
+    function getN(t, e, i, a) {
+        var n = e >= a ? a / e : 1,
+            o = t >= i ? i / t : 1;
+        return {
+            l: o,
+            t: n,
+            m: Math.min(o, n)
+        }
+    }
+
+    function change($dom, flag) {
+        var arr = [],
+            l = 5,
+            f = 9,
+            g = 3,
+            p = 3400,
+            T = {
+                t: $(window).scrollTop(),
+                l: $(window).scrollLeft(),
+                w: $(window).width(),
+                h: $(window).height()
+            };
+        var width = $dom.width(),
+            height = $dom.height();
+        var i = {
+            width: $dom.width(),
+            height: $dom.height(),
+            marginTop: parseFloat($dom.css('marginTop')),
+            marginLeft: parseFloat($dom.css('marginLeft'))
+        };
+        $dom.css('position', 'relative');
+        var d = $dom.find('.poa');
+        if (d && d.length == 0) {
+          
+            for (var i = 0; i < g; i++) {
+                for (var j = 0; j < f; j++) {
+                    var dom = '<div class="poa" data-left="' + width * j / f + '" data-top="' + height * i / g + '" style="position:absolute; overflow:hidden;width:0;height:0;" </div>';
+                    $(dom).appendTo($dom);
+                }
+            }
+        }
+        var d = $dom.find('.poa');
+
+
+        var s = $dom.width(),
+            h = $dom.height(),
+            c = l * s / f,
+            w = l * h / g,
+            u = p * (flag ? 4 : 5) / (f * g),
+            m = flag ? "easeInExpo" : "easeOutQuart",
+            v = T.h + T.t - h / g,
+            x = T.w + T.l - s / f,
+            b = $dom.offset().top + $dom.height(),
+            y = $dom.offset().left + $dom.width();
+        $.each(d, function(t, v) {
+            var e = t % f, //列
+                r = Math.floor(t / f), //第几行
+                b = .2 * p * (45 * getDelay(e, f) + 4 * r) / (f * g), //计算延迟时间
+                y = $dom.offset().left + T.l + c * e - s * l / 2 + c,
+                I = $dom.offset().top + T.t + w * r - h * l / 2 + w,
+                z = getN(y, I, x, v),
+                C = {
+                    opacity: 1,
+                    left: s * e / f,
+                    top: h * r / g,
+                    width: s / f,
+                    height: h / g,
+                    zIndex: Math.ceil(100 - 100 * getDelay(e, f))
+                },
+                E = {
+                    opacity: 0,
+                    left: (c * e - s * l / 2) * z.l,
+                    top: (w * r - h * l / 2) * z.t,
+                    width: c * z.m,
+                    height: w * z.m
+                },
+                L = {
+                    left: -(s * e / f) + i.marginLeft,
+                    top: -(h * r / g) + i.marginTop,
+                    width: i.width,
+                    height: i.height
+                },
+                Q = {
+                    left: -l * (s / f * e - i.marginLeft) * z.m,
+                    top: -l * (h / g * r - i.marginTop) * z.m,
+                    width: l * i.width * z.m,
+                    height: l * i.height * z.m
+                };
+
+            if (!flag) {
+                var _ = C;
+                C = E, E = _, _ = L, L = Q, Q = _
+            }
+            $(v).show();
+            $(v).css(C).delay(b).animate(E, u, m, flag ? function() {
+                // $(v).hide()
+            } : {});
+        })
+
+    }
+
+    init();
+    var flag = false;
+    $(document).on('click', function() {
+        flag = !flag;
+        change($('#main'), flag);
+    })
+    </script>
+</body>
+
+</html>
