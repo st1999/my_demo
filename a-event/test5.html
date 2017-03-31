@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>call apply arguments</title>
+</head>
+
+<body>
+    <div class="main" id="main">
+        <div class="id" id="id"></div>
+    </div>
+    <script>
+    function add(a, b) {
+        return a + b;
+
+    }
+
+    function sub(a, b) {
+        return a - b;
+    }
+    alert(sub.call(add, 4, 1));
+
+    function a1() {
+        this.name = "12";
+        this.sayName = function() {
+            alert(this.name);
+        }
+    }
+
+    function a2() {
+        this.name = "13";
+    }
+    var a11 = new a1(),
+        a22 = new a2();
+    // a11.sayName.call(a22, '');
+    a11.sayName.apply(a22, []);
+
+    function Animal() {
+        this.name = "Animal";
+        this.showName = function() {
+            alert(this.name);
+        }
+    }
+
+    function Cat() {
+        this.name = "Cat";
+    }
+
+    var animal = new Animal();
+    var cat = new Cat();
+
+    //通过call或apply方法，将原本属于Animal对象的showName()方法交给对象cat来使用了。    
+    //输入结果为"Cat"    
+    animal.showName.call(cat, ",");
+    animal.showName.apply(cat, []);
+
+
+    function factorial(x) {
+        if (x < 2) {
+            return 1;
+        } else {
+            return x * arguments.callee(x - 1);
+        }
+    }
+    alert(factorial(5));
+    </script>
+</body>
+
+</html>
