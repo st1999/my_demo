@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+    <style>
+    canvas {
+        border: 1px solid #ececec;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <canvas width='800' height="600" id="mainCanvas"></canvas>
+        <img class="img" src="" alt="">
+        <img src="../../img/mm.jpg" id="img" height="135" width="180" alt="">
+        
+    </div>
+
+    <script>
+    var canvas = document.getElementById('mainCanvas');
+    var ctx = canvas.getContext('2d');
+    ctx.lineWidth = 10;
+    ctx.fillStyle = "#f00";
+    ctx.strokeStyle = '#ff0';
+    ctx.rect(10, 10, 30, 30);
+    ctx.fill();
+    ctx.stroke();
+    ctx.lineWidth = 5;
+    // ctx.clearRect(4,4,30,30);
+    ctx.beginPath();
+    ctx.moveTo(80, 20);
+    ctx.lineTo(90, 70);
+    // ctx
+    // 
+    ctx.lineWidth = 3;
+
+
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.arc(100, 100, 40, 0, Math.PI * 0.5, false);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.font = "40px 微软雅黑";
+    ctx.strokeText('vubhijnkml;', 100, 40);
+    // ctx.fill()
+    // .stroke();
+    // destination-over
+    // ctx.globalCompositeOperation = 'xor';
+    ctx.save();
+    ctx.strokeStyle = '#ececec';
+    ctx.strokeRect(30, 100, 100, 20);
+    ctx.save();
+    ctx.restore();
+    ctx.strokeRect(30, 200, 100, 20);
+    // ctx.rotate(1);
+    ctx.transform(1, 0.5, 1, 2, 10, 100);
+    ctx.strokeRect(20, 10, 100, 20);
+    // ctx.save();
+    ctx.restore();
+    ctx.globalAlpha = 1;
+    // ctx.globalAlpha=0.5;
+    ctx.strokeStyle = '#000';
+    ctx.shadowBlur = 20;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowColor = 'blue';
+    // ctx.transform(1,-0.5,-1,-2,-10,-100);
+    ctx.fillRect(110, 110, 100, 20);
+    // var g1 = ctx.createLinearGradient(0,0,0,600);
+    var g1 = ctx.createRadialGradient(300, 300, 100, 100, 100, 30);
+    g1.addColorStop(0, '#567890');
+    g1.addColorStop(1, '#f00');
+    ctx.fillStyle = g1;
+    ctx.fillRect(410, 310, 100, 100);
+    ctx.beginPath();
+    ctx.moveTo(300, 200);
+    ctx.quadraticCurveTo(400, 400, 500, 200);
+    ctx.bezierCurveTo(600, 100, 700, 400, 800, 200);
+    ctx.moveTo(50, 250);
+    ctx.bezierCurveTo(150, 50, 350, 450, 450, 250);
+    ctx.closePath();
+    ctx.stroke();
+    var dataUlr = canvas.toDataURL();
+    $('.img').attr('src',dataUlr);
+    ctx.translate(100,100);
+    ctx.rotate(0.5);
+    ctx.scale(2,2);
+
+    // 40,40,100,100 图片的起始位置，宽度高度  0,0,100,100 canvas的位置，宽度高度
+    // ctx.drawImage($('#img')[0],40,40,100,100,0,0,100,100);
+    debugger
+    var d = ctx.getImageData(0,0,300,300);
+    debugger
+
+
+    </script>
+</body>
+
+</html>

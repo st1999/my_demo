@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+	<style type="text/css">
+	.main{
+		width: 600px;
+		height: 400px;
+		border:1px solid #ddd;
+	}
+	</style>
+</head>
+<body>
+<!-- <img src="bg.png" id="img" height="31" width="66" alt=""> -->
+	<div class="main">
+		<canvas id="main" width= '600' height="400"></canvas>
+	</div>	
+	<script>
+	$(function(){
+		var canvas = document.getElementById('main');
+        if (canvas == null)
+            return false;
+        var context = canvas.getContext("2d");
+        context.fillStyle = "black";
+        // context.fillRect(0, 0, 400, 300);
+        image = new Image();
+         image.src = "bg.png"
+        image.onload = function() {
+            context.drawImage(image, 12, 20);
+            // img
+            // context.drawImage($('#img').get(0), 0, 0);
+        }
+       
+	})
+	</script>
+</body>
+</html>

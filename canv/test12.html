@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.mianCanvas{
+		position: absolute;
+		left: 50%;
+		top:50%;
+		margin-left: -300px;
+		margin-top: -200px;
+		border: 2px solid #ececec;
+	}
+	div.btn{
+		position: absolute;
+		left: 50%;
+		top:50%;
+		margin-left: -300px;
+		margin-top: 200px;
+	}
+	div button{
+		box-sizing: border-box;
+		padding:4px 10px;
+		background: #6EC7C0;
+		border: none;
+		margin: 10px;
+		color:#fff;
+	}
+	</style>
+	<script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+	<canvas class="mianCanvas" id="mianCanvas"  width="600" height="400"></canvas>
+	<div class="btn" ><button id="start">开始</button> <button id="stop">结束</button></div>
+	<canvas class="" id="mianCanvas1"  width="600" height="400"></canvas>
+<script>
+	var canvas = $('#mianCanvas');
+	var context = canvas[0].getContext('2d');
+	var canvasWidth = canvas.width(),
+		canvasHeight = canvas.height();
+	var x = 0,y=100;
+	function animate(){
+		x++;y++;
+		if(x>canvasWidth-10){
+			x =0 ;
+		}
+		if(y>canvasHeight-10){
+			y =0;
+		}
+		context.clearRect(0,0,canvasWidth,canvasHeight);
+
+		context.fillStyle="#6EC7C0";
+		context.fillRect(x,y,10,10)
+		context.fillRect(y,20,10,10)
+		setTimeout(animate,33);
+	}
+	function animating(){
+
+	}
+	$('#start').on('click',function(){
+		alert('开始')
+	})
+	$('#stop').on('click',function(){
+		alert('结束');
+	})
+	animate();
+
+	</script>
+<script>
+	var canvas = $('#mianCanvas1');
+	var context = canvas[0].getContext('2d');
+	var canvasWidth = canvas.width(),
+		canvasHeight = canvas.height();
+	var r =100,x = 300, y = 200;angle =0;
+	function animate(){
+		var deg = Math.PI/180;
+		angle++;
+		context.clearRect(0,0,canvasWidth,canvasHeight);
+		context.strokeStyle="#6EC7C0";
+	    context.beginPath();
+	    context.arc(300, 200, 100, 0, Math.PI * 2, false);
+	    context.closePath();
+	    context.stroke();
+		var x1 = x+r*Math.cos(angle*deg);
+		var y1 = y+r*Math.sin(angle*deg);
+		context.fillStyle="#6EC7C0";
+		context.fillRect(x1,y1,10,10)
+		// context.fillRect(y,20,10,10)
+
+		setTimeout(animate,33);
+	}
+	
+	animate();
+</script>
+</body>
+</html>

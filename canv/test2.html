@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .main{
+        border: 1px solid #f00;
+        width: 600px;
+        height: 400px;
+        background-color:#f9f9f9;
+    }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.</canvas>
+    <div class="main"><canvas id="myCanvas1" width="600" height="400" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.</canvas></div>
+    <script>
+    var c = document.getElementById("myCanvas");
+    var ctx1 = c.getContext("2d");
+    ctx1.fillStyle = "red";
+    ctx1.fillRect(20, 20, 75, 50);
+    // 调节透明度
+    ctx1.globalAlpha = 0.2;
+    ctx1.fillStyle = "blue";
+    ctx1.fillRect(50, 50, 75, 50);
+    ctx1.fillStyle = "green";
+    ctx1.fillRect(80, 80, 75, 50);
+
+    ctx1.font = "30px Arial";
+    ctx1.strokeText("Hello World", 10, 50);
+    </script>
+    <script>
+    var c1 = document.getElementById("myCanvas1");
+    var ctx = c1.getContext("2d");
+    var data = [1,2,3,45,6,19];
+    
+    </script>
+</body>
+
+</html>

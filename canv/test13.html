@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .mianCanvas {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -400px;
+        margin-top: -300px;
+        border: 2px solid #ececec;
+        background: url(../../aaa/background.jpg) center;
+        /*background: #000;*/
+    }
+    
+    div.btn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -400px;
+        margin-top: 300px;
+    }
+    
+    div button {
+        box-sizing: border-box;
+        padding: 4px 10px;
+        background: #6EC7C0;
+        border: none;
+        margin: 10px;
+        color: #fff;
+    }
+    </style>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+</head>
+
+<body>
+    <div class="mianCanvas">
+        <canvas width='800' class="" height="600" id="mainCanvas"></canvas>
+    </div>
+    <div class="btn">
+        <button id="start">开始</button>
+        <button id="stop">结束</button>
+    </div>
+    <script>
+    $(document).ready(function() {
+        var canvas = $('#mainCanvas');
+        var context = canvas.get(0).getContext('2d');
+        var canvasWidth = canvas.width(),
+            canvasHeight = canvas.height();
+
+        var circle = function(x, y, r, vx, vy, ax, ay) {
+            this.x = x;
+            this.y = y;
+            this.r = r;
+            this.vx = vx;
+            this.vy = vy;
+            this.ax = ax;
+            this.ay = ay;
+        }
+        var arr = [];
+        for (var i = 0; i < 50; i++) {
+            var x = 1 + (Math.random() * (canvasWidth - 100));
+            var y = 1 + (Math.random() * (canvasHeight - 100));
+            var r = 5 + Math.random() * 10;
+            arr.push(new circle(x, y, r, Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 0.2 - 0.1, Math.random() * 0.2 - 0.1));
+        }
+        var g1 = context.createRadialGradient(200, 150, 0, 200, 150, 100);
+        g1.addColorStop(0.1, 'rgb(255,0,0)');  
+        g1.addColorStop(1, 'rgb(50,0,0)');
+        context.fillStyle = g1;
+        context.beginPath();
+        context.arc(0, 0, 40, 0, Math.PI * 2, false);
+        context.closePath();
+        context.stroke();
+
+        function animate() {
+            context.clearRect(0, 0, canvasWidth, canvasHeight);
+         //     var g1 = context.createRadialGradient(0,0 , 0, 800, 600, 800);
+	        // g1.addColorStop(0.1, 'rgb(255,255,255)');  
+	        // g1.addColorStop(1, 'rgb(50,0,0)');
+        context.fillStyle = '#fff';
+            for (var i = 0; i < arr.length; i++) {
+
+                var d = arr[i];
+                if (d.x - d.r < 0) {
+                    d.x = d.r;
+                    d.vx *= -1;
+                    d.ax *= -1;
+                } else if (d.x + d.r > canvasWidth) {
+                    d.x = canvasWidth - d.r;
+                    d.vx *= -1;
+                    d.ax *= -1;
+                }
+                if (d.y - d.r < 0) {
+                    d.y = d.r;
+                    d.vy *= -1;
+                    d.ay *= -1;
+                } else if (d.y + d.r > canvasHeight) {
+                    d.y = canvasHeight - d.r;
+                    d.vy *= -1;
+                    d.ay *= -1;
+                }
+                debugger
+                if(Math.abs(d.vx)<4){
+	                d.vx += d.ax;
+	            }
+	            if(Math.abs(d.vy)<4){
+	            	d.vy += d.ay;
+	            }
+                
+                d.x += d.vx;
+                d.y += d.vy;
+
+                context.beginPath();
+                context.arc(d.x, d.y, d.r, 0, Math.PI * 2, false);
+                context.closePath();
+                context.fill();
+            }
+
+            setTimeout(animate, 33);
+        }
+        animate();
+    })
+    </script>
+    <!-- <script type="text/javascript">
+    var canvas = document.getElementById('mainCanvas');
+    var ctx = canvas.getContext('2d');
+    ctx.strokeStyle="#6EC7C0";
+    ctx.beginPath();
+    ctx.arc(100, 100, 40, 0, Math.PI * 2, false);
+    ctx.closePath();
+    ctx.stroke();
+    </script> 
+    <canvas width='800' height="600" id="mainCanvas1"></canvas>
+    <script type="text/javascript">
+    function addRectShape(x,y,w,h){
+    	this.x = x,
+    	this.y = y,
+    	this.w = w,
+    	this.h = h;
+    	this.draw = function(){
+
+    	}
+    }
+    var canvas = document.getElementById('mainCanvas1');
+    var ctx = canvas.getContext('2d');
+   
+    </script>
+    -->
+</body>
+
+</html>

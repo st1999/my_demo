@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .myCanvas {
+        /*width: 1000px;
+        height: 400px;*/
+    }
+    </style>
+    <script src=""></script>
+</head>
+
+<body>
+    <canvas id="myCanvas" class="myCanvas" width="1000" height="400"></canvas>
+    <script type="text/javascript">
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.rect(95, 50, 100, 90);
+    if (ctx.isPointInPath(115, 70)) { //判断点（115,70）是否位于当前路径内
+        ctx.fillStyle = "#FF7373";
+        ctx.fill();
+    } else {
+        alert("不在矩形路径内");
+    }
+
+    function getEventPosition(ev) {　　
+        var x, y;　　
+        if (ev.layerX || ev.layerX == 0) {　　
+            x = ev.layerX;　　
+            y = ev.layerY;　　
+        } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+            　　
+            x = ev.offsetX;　　
+            y = ev.offsetY;　　
+        }　　
+        return {
+            x: x,
+            y: y
+        };　　
+    }
+    c.onclick = function(e) {
+        debugger
+        e = e || event; //获取事件对象
+        //获取事件在canvas中发生的位置
+        // var x = e.clientX - c.offsetLeft;
+        // var y = e.clientY - c.offsetTop;
+        var d = getEventPosition(e);
+
+        debugger
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        if (ctx.isPointInPath(d.x, d.y)) {
+            ctx.fillStyle = "#000";
+            ctx.fill();
+        } else {
+            alert("不在矩形路径内");
+        }
+    }
+    </script>
+</body>
+
+</html>

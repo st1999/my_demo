@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <canvas id="canvas" width="800" height="600" style="border:2px solid #ececec;"></canvas>
+    </div>
+    <script>
+    var canvas = $('#canvas');
+    var context = canvas.get(0).getContext('2d');
+
+    function draw(x, y, r, n) {
+        if (n >= 3) {
+            var deg = Math.PI * 2 / n;
+            context.save();
+            context.translate(x, y);
+            context.beginPath();
+            for (var i = 1; i < n+1; i++) {
+                var x1 = Math.sin(i * deg);
+                var y1 =-Math.cos(i * deg);
+                context.lineTo(x1 * r, y1 * r);
+            }
+            var c = context.createRadialGradient(0, 0, 0, 0, 0, 130);
+            c.addColorStop(0, "#22f");
+            c.addColorStop(1, "#0ef")
+            context.fillStyle = c;
+            context.lineWidth =1;
+            context.strokeStyle = '#f00';
+            context.closePath();
+            context.fill();
+            context.stroke();
+            context.restore();
+        }
+
+    }
+    draw(100,100,100,4);
+    draw(300,100,50,10);
+    </script>
+</body>
+
+</html>

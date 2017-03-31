@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+    <!-- // <script src="../../html2canvas-master/dist/html2canvas.js"></script> -->
+    <style type="text/css">
+    .list {
+        width: 200px;
+        height: 100px;
+        line-height: 20px;
+        font-size: 16px;
+        overflow: hidden;
+    }
+    
+    .main {
+        width: 100%;
+        height: 100px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="list" class='list'>cyuvhibjnk;ml',fcgvuibhhjij不予共享测试fy资源的描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述</div>
+    <div class="img-info"><img src="../../img/girl.jpg" height="165" width="220" alt=""></div>
+    <img src="" id="img" alt="" class="img">
+    <canvas id="main" class="main"></canvas>
+    <canvas id="myCanvas" class="main"></canvas>
+</body>
+<!-- <script>
+	$(function(){
+		html2canvas(document.getElementById('list')).then(function(canvas) {
+            var image = canvas.toDataURL("image/png");  
+            var pHtml = "<img src="+image+" />";  
+            $('.img').attr('src',image); 
+            var c=document.getElementById("main");
+			var ctx=c.getContext("2d");
+			var img=document.getElementById("img");
+			ctx.drawImage(img,0,0);
+			// setTimeout(function(){
+			// 	ctx.fillStyle='#FF0000';
+			// 	ctx.fillRect(0,0,20,20);
+			// },1000)
+			
+        });
+	})
+</script> -->
+<script type="text/javascript">
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
+ctx.fillStyle = '#FF0000';
+ctx.fillRect(0, 0, 80, 100);
+ctx.beginPath();
+ctx.lineCap = "round";
+ctx.moveTo(20, 20);
+ctx.lineTo(20, 200);
+ctx.stroke();
+function getEventPosition(ev){
+  var x, y;
+  if (ev.layerX || ev.layerX == 0) {
+    x = ev.layerX;
+    y = ev.layerY;
+  } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+    x = ev.offsetX;
+    y = ev.offsetY;
+  }
+  return {x: x, y: y};
+}
+function windowToCanvas(canvas, x, y) {
+    var bbox = canvas.getBoundingClientRect();
+    debugger
+    return {
+        x: x - bbox.left * (canvas.width / bbox.width),
+        y: y - bbox.top * (canvas.height / bbox.height)
+    };
+}
+canvas.addEventListener('click', function(e) {
+    debugger
+    var d = getEventPosition();
+    if()
+    debugger
+
+},false);
+</script>
+
+</html>

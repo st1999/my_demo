@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    canvas {
+       /* width: 800px;
+        height: 650px;*/
+        border: 1px solid #ececec;
+    }
+    .main canvas{
+    	/*zoom:0.5;*/
+    }
+    </style>
+</head>
+
+<body>
+<div class="main">
+    <canvas id='canvas' ></canvas>
+</div>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+    <script>
+    $('#canvas').attr({
+    	"width":"400",
+    	"height":"400" 
+    })
+    debugger
+    var canvas = document.getElementById('canvas');
+   
+    var context = canvas.getContext("2d");
+     // context.scale(2,2);
+    //实践表明在不设施fillStyle下的默认fillStyle=black
+    context.fillRect(0, 0, 10, 10);
+    //实践表明在不设施strokeStyle下的默认strokeStyle=black
+    context.strokeRect(120, 0, 100, 100);
+
+    //设置纯色
+    context.fillStyle = "red";
+    context.strokeStyle = "blue";
+    context.fillRect(0, 120, 100, 100);
+    context.strokeRect(120, 120, 100, 100);
+
+    //设置透明度实践证明透明度值>0,<1值越低，越透明，值>=1时为纯色，值<=0时为完全透明
+    context.fillStyle = "rgba(255,0,0,0.2)";
+    context.strokeStyle = "rgba(255,0,0,0.2)";
+    context.fillRect(240, 0, 100, 100);
+    context.strokeRect(240, 120, 100, 100);
+
+    context.strokeStyle = "rgb(250,0,0)";
+    context.fillStyle = "rgb(250,0,0)"
+    //实验证明第一次lineTo的时候和moveTo功能一样
+    context.lineTo(100, 100);
+    //之后的lineTo会以上次lineTo的节点为开始
+    context.lineTo(200, 200);
+    context.lineTo(200, 100);
+    context.moveTo(200, 50);
+    context.lineTo(100, 50);
+    context.stroke();
+    </script>
+</body>
+
+</html>

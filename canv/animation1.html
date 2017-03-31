@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../../js/plugin/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+    /*.main{
+		width: 100px;
+		height: 100px;
+		background-color: #ff0;
+		animation:aaa 10s .8s ease-in-out infinite;
+		-webkit-animation:aaa .8s ease-in-out infinite;
+	}
+	@-webkit-keyframes aaa{
+		0%{
+			
+			background-color: #ff0;
+		}
+		50%{
+			background-color: #f00;
+		}
+		100%{
+			background-color: #ff0;
+		}
+	}*/
+    
+    .main {
+        width: 600px;
+        height: 400px;
+        border: 1px solid #ddd;
+    }
+    .hide{
+    	display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <canvas id="canvas"></canvas>
+    </div>
+    <img src="bg.png" id="img" height="31" width="66" alt="" >
+    <script>
+    $(function() {
+        var data = [{
+            name: '30后',
+            value: 165,
+        }, {
+            name: '40后',
+            value: 470,
+        }, {
+            name: '50后',
+            value: 459,
+        }, {
+            name: '60后',
+            value: 1253,
+        }, {
+            name: '70后',
+            value: 2617,
+        }, {
+            name: '80后',
+            value: 2587,
+        }, {
+            name: '90后',
+            value: 71,
+        }, {
+            name: '其他',
+            value: 100,
+        }];
+        var canvas = $('#canvas');
+        var $parent = canvas.parent();
+        var height = $parent.height(),
+            width = $parent.width();
+        canvas.attr({
+            'height': height,
+            'width': width
+        })
+        if (!canvas) {
+            return false;
+        }
+        var max = 0;
+        var count = 0;
+        $.each(data, function(i, item) {
+            max = max >= item.value ? max : item.value;
+            count+= item.value;
+        })
+         $.each(data, function(i, item) {
+           item.percent = Math.round(item.value/count*10000)/100.00;
+        })
+        var content = canvas.get(0).getContext("2d");
+        var padding = {
+            left: 10,
+            right: 10,
+            top: 80,
+            bottom: 40
+        };
+        var xw = Math.ceil((width - padding.left - padding.right) / data.length);
+        content.strokeStyle = "#809C9E";
+        content.beginPath();
+        content.moveTo(padding.left, height - padding.bottom);
+        content.lineTo(width - padding.left, height - padding.bottom);
+        content.stroke();
+        content.closePath();
+        content.save();
+        for (var i = 0; i < data.length; i++) {
+            content.font = "12px 微软雅黑";
+            data[i]['x'] = padding.left + xw * i + xw / 2;
+            content.fillStyle = "#869092"
+            var nameL = data[i]['name'].length;
+            // content.fillText(data[i]['name'], padding.left + xw * i + xw / 2 - nameL * 6, height - padding.bottom / 2);
+            content.textAlign ='center';
+            content.fillText(data[i]['name'], padding.left + xw * i + xw / 2 , height - padding.bottom / 2);
+        }
+        content.restore();
+
+        content.save();
+        content.strokeStyle = "#1098B6";
+        content.fillStyle = "#80CBDE";
+        content.beginPath();
+        content.lineWidth = 2;
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            var x = item.x;
+            var y = Math.round((height - padding.top - padding.bottom) * item.value / max);
+            data[i]['y'] = height - padding.bottom - y;
+            if (i == 0) {
+                content.moveTo(x, data[i]['y']);
+            } else {
+                content.lineTo(x, data[i]['y']);
+            }
+        }
+        content.stroke();
+
+        content.lineTo(data[data.length - 1]['x'], height - padding.bottom-1);
+        content.lineTo(data[0]['x'], height - padding.bottom-1);
+        content.fill();
+        content.closePath();
+        content.restore();
+
+        $.each(data, function(i, item) {
+            content.save();
+            content.strokeStyle = "#1098B6";
+            content.fillStyle = "#BAE2EA";
+            content.lineWidth = 3;
+            content.beginPath();
+            content.arc(item.x, item.y, 4, 0, Math.PI * 2, true);
+            content.stroke();
+            content.fill();
+            content.closePath();
+            content.restore();
+            content.save();
+            content.font = "12px 微软雅黑";
+            content.fillStyle = "#1098B6"
+            var nameL = data[i]['name'].length;
+            vl = item.value.toString().length;
+            content.textAlign ='center';
+            // content.fillText(data[i]['value'], item.x - vl * 14 / 3, item.y - 12 - 30);
+            content.fillText(data[i]['value'], item.x, item.y - 12 - 30);
+            content.drawImage($('#img').get(0),item.x-33, item.y-38);
+            // content.restore();
+            content.save();
+            content.fillStyle = "#fff"
+            content.textAlign ='center';
+            var pl  = (item.percent.toFixed(2)+'%').length;
+            // content.fillText((item.percent.toFixed(2)+'%'), item.x - pl * 14 / 3.5, item.y - 20);
+            content.fillText((item.percent.toFixed(2)+'%'), item.x , item.y - 20);
+            // content.strokeStyle = "#fff";
+            // content.strokeText((item.percent.toFixed(2)+'%'), item.x , item.y - 20);
+            content.restore();
+        })
+        // $('#img').addClass('hide');
+    })
+    </script>
+</body>
+
+</html>
