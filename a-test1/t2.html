@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../js/plugin/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+    .main {
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main" id="main">
+        <canvas id="myCanvas" width="600px" height='400px'></canvas>
+    </div>
+    <script>
+    var canvas = $('#myCanvas')[0];
+
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(250,0,0)";
+    var i = 29;
+    // setInterval(function() {
+        i = i + 1;
+        ctx.save();
+
+        ctx.translate(150, 60); //这个translate(50，50)发生在rotate()之前,其目的是将旋转点从默认点(0，0),移动到(50，50),下面紧跟着的rotate就是按照这个点来转
+        //rotate方法的旋转点完全是按照[在其上\紧跟着它的]translate来确定旋转点的...
+
+        ctx.rotate(Math.PI * i / 180);
+        // ctx.translate(-50, -50); //这个translate是在rotate之下,也就是rotate已经转过了再执行translate(-50,-50),它其实也是将坐标点从(50，50)重新移到了(0，0),紧跟在他下面的rotate旋转中心就是按照(0，0)来旋转的
+        ctx.fillRect(50, 50, 100, 20);
+
+        
+        ctx.restore();
+        ctx.fillRect(150, 50, 1, 200);
+    // }, 10)
+
+    // ctx.fillStyle = "rgb(0,0,250)";
+    // ctx.fillRect(50, 50, 100, 100);
+
+    //实践表明在不设施strokeStyle下的默认strokeStyle=black
+    // ctx.strokeRect(120, 0, 100, 100);
+    </script>
+</body>
+
+</html>
