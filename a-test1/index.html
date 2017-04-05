@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	html,body{
+		width: 100%;
+		height: 100%;
+	}
+	.main{
+		width: 600px;
+		height: 400px;
+		border:1px solid #ddd;
+	}
+	</style>
+	<script src="../js/plugin/jquery-1.8.3.min.js"></script>
+</head>
+
+<body>
+
+	<div class="main" id="main">
+		<canvas id="myCanvas" width="600px" height='400px' ></canvas>
+	</div>
+	<div class="main">
+		<canvas id="canvas" width="600px" height='400px'></canvas>
+	</div>
+	<script>
+	var canvas = $('#myCanvas')[0];
+
+	var ctx1 = canvas.getContext("2d");
+	 // ctx.fillRect($('#main').width()/2-100, $('#main').height()/2-10, 100, 10);
+	 i = 1;
+	 // ctx.rotate(10 * Math.PI / 180);
+	  // ctx.fillRect($('#main').width()/2-100, $('#main').height()/2-10, 100, 10);
+	
+    // setInterval(function(){
+		ctx1.translate(-300,-200);
+	 	 ctx1.rotate((i+100)*Math.PI/180);
+	 	ctx1.clearRect(0,0,600,400);
+	 	ctx1.fillRect(300, 200, 100, 10);
+
+	 // },10)
+
+    ctx = document.getElementById('canvas').getContext('2d'); 
+   ctx.fillStyle = "rgb(250,0,0)";
+   ctx.save();
+   ctx.translate(50,50); //这个translate(50，50)发生在rotate()之前,其目的是将旋转点从默认点(0，0),移动到(50，50),下面紧跟着的rotate就是按照这个点来转
+   //rotate方法的旋转点完全是按照[在其上\紧跟着它的]translate来确定旋转点的...
+   // ctx.rotate(-Math.PI/8);
+   ctx.translate(-50,-50);//这个translate是在rotate之下,也就是rotate已经转过了再执行translate(-50,-50),它其实也是将坐标点从(50，50)重新移到了(0，0),紧跟在他下面的rotate旋转中心就是按照(0，0)来旋转的
+   ctx.fillRect(50,50,100,200);
+  
+   //ctx.beginPath();
+   ctx.fillStyle="rgb(0,255,0)"
+   ctx.rotate(-Math.PI/6);
+   ctx.fillRect(50,50,100,200);
+  
+   ctx.restore();
+   ctx.fillStyle = "rgb(0,0,250)";
+   ctx.fillRect(50,50,5,5);
+	
+    //实践表明在不设施strokeStyle下的默认strokeStyle=black
+    // ctx.strokeRect(120, 0, 100, 100);
+	</script>
+</body>
+</html>
